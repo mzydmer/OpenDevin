@@ -32,7 +32,7 @@ function ExplorerActions({
   return (
     <div
       className={twMerge(
-        "transform flex h-[24px] items-center gap-1 absolute top-4 right-2",
+        "transform flex h-[24px] items-center gap-1",
         isHidden ? "right-3" : "right-2",
       )}
     >
@@ -167,17 +167,29 @@ function FileExplorer() {
           isHidden ? "min-w-[48px]" : "min-w-[228px]",
         )}
       >
-        <div className="flex p-2 items-center justify-between relative">
+        <div className="flex flex-col p-2 relative">
+          <div
+            className={twMerge(
+              "flex items-center mt-2 mb-1",
+              isHidden ? "justify-center" : "justify-between",
+            )}
+          >
+            {!isHidden && (
+              <div className="ml-1 text-neutral-300 font-bold text-sm">
+                Workspace
+              </div>
+            )}
+            <ExplorerActions
+              isHidden={isHidden}
+              toggleHidden={() => setIsHidden((prev) => !prev)}
+              onRefresh={refreshWorkspace}
+              onUpload={selectFileInput}
+            />
+          </div>
+
           <div style={{ display: isHidden ? "none" : "block" }}>
             <ExplorerTree files={files} defaultOpen />
           </div>
-
-          <ExplorerActions
-            isHidden={isHidden}
-            toggleHidden={() => setIsHidden((prev) => !prev)}
-            onRefresh={refreshWorkspace}
-            onUpload={selectFileInput}
-          />
         </div>
         <input
           data-testid="file-input"
